@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SDL-UTECO
 
-## Getting Started
+![Logo](ruta/a/logo.png) <!-- Inserta aquí el logo de tu proyecto -->
 
-First, run the development server:
+SDL-UTECO es una solución de software diseñada para simplificar la gestión documental del departamento legal de UTeco. Proporciona una herramienta tecnológica que facilita el manejo y seguimiento digital de documentos de manera centralizada. Esta plataforma ofrece funcionalidades avanzadas para la creación, captura, almacenamiento, búsqueda, consulta, seguimiento y control estructurado de archivos en la nube. Ofrece características avanzadas para la colaboración, automatización de procesos, seguridad y auditoría, lo que permite optimizar y agilizar el manejo de datos en todas las áreas.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologías utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 13
+- React
+- Convex
+- Tailwind
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Captura y creación de documentos:** SDL-UTECO permite a los usuarios crear documentos desde cero o capturar archivos en papel y convertirlos a formato electrónico para su gestión digital.
+- **Almacenamiento y organización:** La plataforma proporciona un almacenamiento y organización eficientes de documentos, facilitando la búsqueda y recuperación rápida para usuarios autorizados.
+- **Flujo de trabajo y colaboración:** SDL-UTECO facilita la revisión, aprobación, visibilidad y colaboración en tiempo real entre los miembros del equipo.
+- **Automatización de procesos:** La plataforma de gestión documental permite automatizar procesos como la asignación de recordatorios, seguimiento de plazos y envío de notificaciones.
+- **Seguridad y control de acceso:** SDL-UTECO garantiza la seguridad, control de acceso, control de versiones y registro de actividades, manteniendo así la confidencialidad y protegiendo la información sensible.
 
-## Learn More
+## Cómo empezar
 
-To learn more about Next.js, take a look at the following resources:
+Sigue estos pasos para comenzar con SDL-UTECO:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clona el repositorio: `git clone https://github.com/tu-usuario/SDL-UTECO.git`
+2. Instala las dependencias: `npm install`
+3. Configura las variables de entorno.
+4. Inicia el servidor de desarrollo: `npm run dev`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Guías de contribución
 
-## Deploy on Vercel
+¡Las contribuciones a SDL-UTECO son bienvenidas! Si deseas contribuir, por favor sigue estas guías:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Haz un fork del repositorio y crea tu rama: `git checkout -b feature/tu-funcionalidad`
+- Realiza tus cambios: `git commit -m 'Agregar tu funcionalidad'`
+- Sube la rama: `git push origin feature/tu-funcionalidad`
+- Envía una pull request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Licencia
+
+SDL-UTECO se distribuye bajo la [Licencia MIT](license.md).
+
+## Contacto
+
