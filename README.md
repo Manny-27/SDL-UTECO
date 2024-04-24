@@ -1,6 +1,6 @@
 # SDL-UTECO
 
-![Logo](ruta/a/logo.png) <!-- Inserta aquí el logo de tu proyecto -->
+![Logo](https://uteco.edu.do/wp-content/uploads/2019/11/logo_uteco.png) <!-- Inserta aquí el logo de tu proyecto -->
 
 SDL-UTECO es una solución de software diseñada para simplificar la gestión documental del departamento legal de UTeco. Proporciona una herramienta tecnológica que facilita el manejo y seguimiento digital de documentos de manera centralizada. Esta plataforma ofrece funcionalidades avanzadas para la creación, captura, almacenamiento, búsqueda, consulta, seguimiento y control estructurado de archivos en la nube. Ofrece características avanzadas para la colaboración, automatización de procesos, seguridad y auditoría, lo que permite optimizar y agilizar el manejo de datos en todas las áreas.
 
