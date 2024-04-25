@@ -8,17 +8,31 @@ export const Heroes = () => {
                     <Image 
                     src="/undraw_Doc.png"
                     fill
-                    className="object-contain"
+                    className="object-contain dark:hidden"
                     alt="Documentos"
                     />
+                    {/* para imagenes en logo oscuro */}
+                    {/* <Image 
+                    src="/undraw_Doc.png"
+                    fill
+                    className="object-contain hidden dark:block"
+                    alt="Documentos"
+                    /> */}
                 </div>
                 <div className="relative h-[400px] w-[400px] hidden md:block">
                     <Image 
                     src="/Collaborators.png"
                     fill
-                    className="object-contain"
+                    className="object-contain dark:hidden"
                     alt="Collaborators"
                     />
+                    {/* para imagenes de modo oscuro */}
+                    {/* <Image 
+                    src="/Collaborators.png"
+                    fill
+                    className="object-contain hidden dark:block"
+                    alt="Collaborators"
+                    /> */}
                 </div>
             </div>
         </div>
