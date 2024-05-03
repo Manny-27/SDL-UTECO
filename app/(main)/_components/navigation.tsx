@@ -1,14 +1,21 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery} from "usehooks-ts";
+import UserItem from "./user-item";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
 
 const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
+    const documents = useQuery(api.documents.get);
+    const create = useMutation(api.documents.create);
 
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -87,6 +94,16 @@ const Navigation = () => {
         }
     }
 
+    const handleCreate = () => {
+        const promise = create({title: "Untitle"});
+
+        toast.promise(promise, {
+            loading: "Creando un documento nuevo...",
+            success: "Nuevo documento creado!",
+            error: "Ocurrio un error al crear el documento"
+        });
+    };
+
     return ( 
         <>
         <aside ref={sidebarRef} 
@@ -104,10 +121,26 @@ const Navigation = () => {
                     <ChevronsLeft className="h-6 w-6"/>
             </div>
             <div>
-                <p>Action items</p>
+                <UserItem />
+                <Item 
+                label="Buscar"
+                icon={Search}
+                isSearch
+                onClick={() => {}}
+                />
+                <Item 
+                label="Ajustes"
+                icon={Settings}
+                onClick={() => {}}
+                />
+                <Item onClick={handleCreate} label="Nuevo documento" icon={PlusCircle} />
             </div>
             <div className="mt-4">
-                <p>documents</p>
+                {documents?.map((document) => (
+                    <p key={document._id}>
+                        {document.title}
+                    </p>
+                ))}
             </div>
             <div
             onMouseDown={handleMouseDown}
@@ -127,7 +160,7 @@ const Navigation = () => {
             </nav>
         </div>
         </>
-     );
+    );
 }
 
 export default Navigation;
