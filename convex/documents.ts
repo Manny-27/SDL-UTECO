@@ -262,7 +262,7 @@ export const getSearch = query({
 });
 
 export const getById = query({
-    args: {documentId: v.id("documents") },
+    args: { documentId: v.id("documents") },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
 
