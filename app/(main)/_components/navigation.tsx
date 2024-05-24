@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery} from "usehooks-ts";
 import UserItem from "./user-item";
@@ -18,6 +18,7 @@ import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
 
 const Navigation = () => {
+    const router = useRouter();
     const settings = useSettings();
     const search = useSearch();
     const params = useParams();
@@ -103,7 +104,8 @@ const Navigation = () => {
     }
 
     const handleCreate = () => {
-        const promise = create({title: "Untitle"});
+        const promise = create({title: "Untitle"})
+        .then((documentId) => router.push(`/documents/${documentId}`))
 
         toast.promise(promise, {
             loading: "Creando un documento nuevo...",
