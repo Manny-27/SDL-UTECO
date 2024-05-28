@@ -10,8 +10,8 @@ const Error = () => {
         <div className="h-full flex flex-col items-center justify-center space-y-4">
             <Image 
                 src="/404.png"
-                height="400"
-                width="400"
+                height="600"
+                width="600"
                 alt="Error"
                 className="dark:hidden"
             />
