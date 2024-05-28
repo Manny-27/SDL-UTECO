@@ -9,7 +9,7 @@ import { SearchCommand } from "@/components/search-command";
 const MainLayout =({
     children
 }: {
-    chindre: React.ReactNode;
+    children: React.ReactNode;
 }) => {
     const { isAuthenticated, isLoading } = useConvexAuth(); 
 
