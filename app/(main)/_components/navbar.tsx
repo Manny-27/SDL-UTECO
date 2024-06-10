@@ -10,6 +10,7 @@ import { Banner } from "./banner";
 import { Menu } from "./menu";
 import { Publish } from "./publish";
 import { Descargar } from "./descargar";
+import { Plantilla } from "./plantilla";
 interface NavbarProps {
     isCollapsed: boolean;
     onResetWith: () => void;
@@ -54,6 +55,7 @@ export const Navbar = ({
                     <Title initialData={document} />
                     <div className="flex items-center gap-x-2">
                         <Descargar />
+                        <Plantilla />
                         <Publish initialData={document}/>
                         <Menu documentId={document._id}/>
                     </div>

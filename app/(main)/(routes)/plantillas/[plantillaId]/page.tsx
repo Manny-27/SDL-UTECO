@@ -13,7 +13,7 @@ import { WidthContext } from "@/contexts/WidthContext";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
-export default function DocumentIdPage() {
+export default function PlantillaIdPage() {
     const params = useParams()
     const { width } = useContext(WidthContext)
     const Editor = useMemo(

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery} from "usehooks-ts";
@@ -143,6 +143,13 @@ const Navigation = () => {
                 icon={Settings}
                 onClick={settings.onOpen}
                 />
+                {/* plantilla */}
+                <Item 
+                label="Plantillas"
+                icon={NotepadText}
+                onClick={() => {}}
+                />
+                {/* plantilla */}
                 <Item onClick={handleCreate} label="Nuevo documento" icon={PlusCircle} />
             </div>
             <div className="mt-4">
