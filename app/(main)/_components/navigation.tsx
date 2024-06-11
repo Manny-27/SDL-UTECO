@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText, User } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery} from "usehooks-ts";
@@ -145,6 +145,13 @@ const Navigation = () => {
                 icon={Settings}
                 onClick={settings.onOpen}
                 />
+                {/* Usuarios */}
+                <Item 
+                label="Usuarios"
+                icon={User}
+                onClick={() => {}}
+                />
+                {/* Usuarios */}
                 {/* plantilla */}
                     <Popover>
                         <PopoverTrigger className="w-full">

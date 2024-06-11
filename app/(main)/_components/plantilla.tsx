@@ -1,43 +1,14 @@
 'use client'
 
-// import { Button } from "@/components/ui/button";
-import { Id } from '../../../convex/_generated/dataModel';
-
-// import { 
-//     DropdownMenu,
-//     DropdownMenuTrigger,
-//     DropdownMenuContent,
-//     DropdownMenuItem,
-//     DropdownMenuSeparator
-// } from "@/components/ui/dropdown-menu";
-// import { Skeleton } from "@/components/ui/skeleton";
-
-// export const Plantilla = () => {
-//     return (
-//         <div className="flex gap-4">
-//             <Button variant="outline">Convertir</Button>
-//             <DropdownMenu>
-//                 <DropdownMenuTrigger>
-//                     <Button variant="ghost">Mis Plantillas</Button>
-//                 </DropdownMenuTrigger>
-//                 <DropdownMenuContent>
-//                     <DropdownMenuItem>
-//                         <div>Hola</div>
-//                     </DropdownMenuItem>
-//                     <DropdownMenuSeparator />
-//                     <DropdownMenuItem>
-//                         <div>Mundo</div>
-//                     </DropdownMenuItem>
-//                 </DropdownMenuContent>
-//             </DropdownMenu>
-//         </div>
-//     )
-// }
 import { FC } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { UsePlantilla } from "./use-plantilla";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Item } from "./item";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText } from "lucide-react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -49,6 +20,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import { PlantillaList } from "./list-plantillas";
 
 interface PlantillaProps {
     documentId: string;
@@ -67,6 +39,19 @@ export const Plantilla: FC<PlantillaProps> = ({ documentId }) => {
     };
 
     return (
+        <>
+            {/* plantilla */}
+            <Popover>
+                        <PopoverTrigger className="w-full">
+                            <Item label="Usar Plantilla" icon={NotepadText} />
+                        </PopoverTrigger>
+                        <PopoverContent
+                        className="p-0 w-72"
+                        >
+                            <PlantillaList />
+                        </PopoverContent>
+                    </Popover>
+                {/* plantilla */}
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button>Convertir a Plantilla</Button>
@@ -84,5 +69,6 @@ export const Plantilla: FC<PlantillaProps> = ({ documentId }) => {
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
+        </>
     );
 };

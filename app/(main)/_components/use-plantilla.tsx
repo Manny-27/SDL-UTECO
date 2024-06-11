@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FileIcon, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-export const PlantillaList: FC = () => {
+export const UsePlantilla: FC = () => {
     const templates = useQuery(api.documents.getTemplates);
     const router = useRouter();
     const documents = useQuery(api.documents.getTemplates);
