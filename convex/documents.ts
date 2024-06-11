@@ -368,3 +368,43 @@ export const removeCoverImage = mutation({
         return document;
     },
 });
+
+// plantilla
+
+export const convertToTemplate = mutation({
+    args: { id: v.id("documents") },
+    handler: async (ctx, args) => {
+      const identity = await ctx.auth.getUserIdentity();
+  
+      if (!identity) {
+        throw new Error("No autorizado");
+      }
+  
+      const userId = identity.subject;
+      const existingDocument = await ctx.db.get(args.id);
+  
+      if (!existingDocument) {
+        throw new Error("No encontrado");
+      }
+  
+      if (existingDocument.userId !== userId) {
+        throw new Error("No autorizado");
+      }
+  
+      const document = await ctx.db.patch(args.id, {
+        isTemplate: true,
+      });
+  
+      return document;
+    },
+  });
+
+  export const getTemplates = query({
+    handler: async (ctx) => {
+        const templates = await ctx.db.query("documents")
+            .filter(q => q.eq(q.field("isTemplate"), true))
+            .collect();
+        return templates;
+    },
+});
+

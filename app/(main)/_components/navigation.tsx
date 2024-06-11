@@ -16,6 +16,8 @@ import { TrashBox } from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
+import { Plantilla } from "./plantilla";
+import { PlantillaList } from "./list-plantillas";
 
 const Navigation = () => {
     const router = useRouter();
@@ -144,11 +146,17 @@ const Navigation = () => {
                 onClick={settings.onOpen}
                 />
                 {/* plantilla */}
-                <Item 
-                label="Plantillas"
-                icon={NotepadText}
-                onClick={() => {}}
-                />
+                    <Popover>
+                        <PopoverTrigger className="w-full">
+                            <Item label="Plantillas" icon={NotepadText} />
+                        </PopoverTrigger>
+                        <PopoverContent
+                        className="p-0 w-72"
+                        side={isMobile ? "bottom" : "right"}
+                        >
+                            <PlantillaList />
+                        </PopoverContent>
+                    </Popover>
                 {/* plantilla */}
                 <Item onClick={handleCreate} label="Nuevo documento" icon={PlusCircle} />
             </div>

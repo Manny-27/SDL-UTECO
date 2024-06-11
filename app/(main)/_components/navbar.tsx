@@ -55,7 +55,7 @@ export const Navbar = ({
                     <Title initialData={document} />
                     <div className="flex items-center gap-x-2">
                         <Descargar />
-                        <Plantilla />
+                        <Plantilla documentId={document._id} />
                         <Publish initialData={document}/>
                         <Menu documentId={document._id}/>
                     </div>
