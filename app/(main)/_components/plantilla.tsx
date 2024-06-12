@@ -48,7 +48,7 @@ export const Plantilla: FC<PlantillaProps> = ({ documentId }) => {
                         <PopoverContent
                         className="p-0 w-72"
                         >
-                            <PlantillaList />
+                            <UsePlantilla />
                         </PopoverContent>
                     </Popover>
                 {/* plantilla */}
