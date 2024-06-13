@@ -446,3 +446,26 @@ export const updateDocument = mutation({
       return document;
     },
   });
+
+  // admin
+
+  export const getUserInfo = query(async ({ db, auth }) => {
+    const identity = await auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("No autorizado");
+    }
+  
+    // Supongamos que estamos almacenando información del usuario en la tabla `documents`.
+    const user = await db.query("documents")
+      .filter(q => q.eq(q.field("userId"), identity.tokenIdentifier))
+      .first();
+  
+    if (!user) {
+      // Si no se encuentra el usuario, devolvemos isAdmin como falso.
+      return { isAdmin: true };
+    }
+  
+    return {
+      isAdmin: user.isAdmin || false,
+    };
+  });

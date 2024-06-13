@@ -12,6 +12,7 @@ export default defineSchema({
         icon: v.optional(v.string()),
         isPublished: v.boolean(),
         isTemplate: v.optional(v.boolean()),
+        isAdmin: v.optional(v.boolean()),
     })
     .index("by_user", ["userId"])
     .index("by_user_parent", ["userId", "parentDocument"])
