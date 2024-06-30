@@ -59,7 +59,7 @@ export const SearchCommand = () => {
       <CommandInput placeholder={`Search ${user?.fullName}...`} />
       <CommandList>
         <CommandEmpty>No hay resultados encontrados</CommandEmpty>
-        <CommandGroup heading="Documents">
+        <CommandGroup heading="Documentos">
           {documents?.map((document) => (
             <CommandItem
               key={document._id}

@@ -21,9 +21,10 @@ export const UsePlantilla: FC = () => {
     const templates = useQuery(api.documents.getTemplates);
     const router = useRouter();
     const params = useParams();
-    const currentDocumentId = params.documentId;  // Suponiendo que el ID del documento actual está en los parámetros de la URL
+    const currentDocumentId = params.documentId;
     const [search, setSearch] = useState("");
     const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
+    const [previewTemplate, setPreviewTemplate] = useState<any>(null);
 
     // Mutación para actualizar un documento
     const updateDocument = useMutation(api.documents.updateDocument);
@@ -46,7 +47,6 @@ export const UsePlantilla: FC = () => {
                 icon: selectedTemplate.icon,
                 isPublished: selectedTemplate.isPublished,
                 parentDocument: selectedTemplate.parentDocument,
-                // Aquí puedes agregar más campos según sea necesario
             });
             router.push(`/documents/${currentDocumentId}`);
         }
@@ -67,16 +67,33 @@ export const UsePlantilla: FC = () => {
                     placeholder="filtrar por título de página..."
                 />
             </div>
-            {filteredTemplates.map((template) => (
-                <Item
-                    key={template._id}
-                    id={template._id}
-                    label={template.title}
-                    icon={FileIcon}
-                    documentIcon={template.icon}
-                    onClick={() => onUseTemplate(template)}
-                />
-            ))}
+            <div>
+                <div className="w-full">
+                    {filteredTemplates.map((template) => (
+                        <Item
+                            key={template._id}
+                            id={template._id}
+                            label={template.title}
+                            icon={FileIcon}
+                            documentIcon={template.icon}
+                            onClick={() => onUseTemplate(template)}
+                            onMouseEnter={() => setPreviewTemplate(template)}
+                            onMouseLeave={() => setPreviewTemplate(null)}
+                        />
+                    ))}
+                </div>
+                <div className="w-full p-4 border-t mt-4">
+                    {previewTemplate ? (
+                        <div>
+                            <h3 className="text-xl font-bold">{previewTemplate.title}</h3>
+                            <p>{previewTemplate.content}</p>
+                            {/* Agrega aquí más campos si es necesario */}
+                        </div>
+                    ) : (
+                        <span className="text-gray-500 text-sm mt-4 flex flex-col">Pasa el mouse sobre una plantilla para ver la previsualización.</span>
+                    )}
+                </div>
+            </div>
 
             {selectedTemplate && (
                 <AlertDialog open={!!selectedTemplate} onOpenChange={() => setSelectedTemplate(null)}>

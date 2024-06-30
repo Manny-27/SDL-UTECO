@@ -1,30 +1,25 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-export const Descargar = () => {
+export const Descargar = ({ documentId }) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-
-    const handlePrintShortcut = (e: KeyboardEvent) => {
-      if (e.key === "p" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        window.print();
-      }
-    };
-
-    document.addEventListener("keydown", handlePrintShortcut);
-
-    return () => {
-      document.removeEventListener("keydown", handlePrintShortcut);
-    };
   }, []);
+
+  const handleDownload = () => {
+    const origin = window.location.origin;
+    const url = `${origin}/descargar/${documentId}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <div>
       {isClient && (
-        <Button variant="uteco" onClick={() => window.print()}>
+        <Button variant="uteco" onClick={handleDownload}>
           Descargar
         </Button>
       )}

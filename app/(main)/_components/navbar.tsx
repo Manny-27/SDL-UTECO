@@ -11,6 +11,7 @@ import { Menu } from "./menu";
 import { Publish } from "./publish";
 import { Descargar } from "./descargar";
 import { Plantilla } from "./plantilla";
+import { initEdgeStore } from '@edgestore/server';
 interface NavbarProps {
     isCollapsed: boolean;
     onResetWith: () => void;
@@ -54,7 +55,7 @@ export const Navbar = ({
                 <div className="flex items-center justify-between w-full">
                     <Title initialData={document} />
                     <div className="flex items-center gap-x-2">
-                        <Descargar />
+                        <Descargar documentId={document._id} />
                         <Plantilla documentId={document._id} />
                         <Publish initialData={document}/>
                         <Menu documentId={document._id}/>

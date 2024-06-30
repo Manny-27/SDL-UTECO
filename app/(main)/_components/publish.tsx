@@ -1,6 +1,4 @@
-"use client"
-
-import { Doc } from "@/convex/_generated/dataModel"
+import { Doc } from "@/convex/_generated/dataModel";
 import { PopoverTrigger, Popover, PopoverContent } from '@/components/ui/popover';
 import { useOrigin } from "@/hooks/use-origin";
 import { useMutation } from "convex/react";
@@ -14,16 +12,15 @@ interface PublishProps {
     initialData: Doc<"documents">
 };
 
-export const Publish = ({
-    initialData
-}: PublishProps) => {
+export const Publish = ({ initialData }: PublishProps) => {
     const origin = useOrigin();
-    const update = useMutation(api.documents.update)
+    const update = useMutation(api.documents.update);
 
     const [copied, setCopied] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isPublished, setIsPublished] = useState(initialData.isPublished);
 
-    const url = `${origin}/preview/${initialData._id}`
+    const url = `${origin}/preview/${initialData._id}`;
 
     const onPublish = () => {
         setIsSubmitting(true);
@@ -32,13 +29,14 @@ export const Publish = ({
             id: initialData._id,
             isPublished: true,
         })
-            .finally(() => setIsSubmitting(false));
+        .then(() => setIsPublished(true))
+        .finally(() => setIsSubmitting(false));
 
         toast.promise(promise, {
             loading: "Publicando...",
             success: "Documento publicado",
-            error: "Error al plublicar Documento"
-        })
+            error: "Error al publicar documento"
+        });
     };
 
     const onUnpublish = () => {
@@ -48,13 +46,14 @@ export const Publish = ({
             id: initialData._id,
             isPublished: false,
         })
-            .finally(() => setIsSubmitting(false));
+        .then(() => setIsPublished(false))
+        .finally(() => setIsSubmitting(false));
 
         toast.promise(promise, {
             loading: "No publicando...",
             success: "Documento no publicado",
-            error: "Error al No plublicar Documento"
-        })
+            error: "Error al no publicar documento"
+        });
     };
 
     const onCopy = () => {
@@ -64,47 +63,40 @@ export const Publish = ({
         setTimeout(() => {
             setCopied(false);
         }, 1000);
-    }
+    };
 
     return (
         <Popover>
             <PopoverTrigger asChild>
                 <Button size="sm" variant="ghost">
                     Publicar
-                    {initialData.isPublished && (
-                    <Globe 
-                        className="text-sky-500 w-4 h-4 ml-2"
-                    />
+                    {isPublished && (
+                        <Globe className="text-sky-500 w-4 h-4 ml-2" />
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent
-                className="w-72"
-                align="end"
-                alignOffset={8}
-                forceMount
-            >
-                {initialData.isPublished ? (
+            <PopoverContent className="w-72" align="end" alignOffset={8} forceMount>
+                {isPublished ? (
                     <div className="space-y-4">
                         <div className="flex items-center gap-x-2">
-                            <Globe className="text-sky-500 animate-pulse h-4 w-4"/>
+                            <Globe className="text-sky-500 animate-pulse h-4 w-4" />
                             <p className="text-xs font-medium text-sky-500">
-                                Este documento esta ahora publico.
+                                Este documento está ahora público.
                             </p>
                         </div>
                         <div className="flex items-center">
-                            <input 
-                                className="flex-1 px-2 text-xs border rounded-l-md h-8 bg-muted truncate "
+                            <input
+                                className="flex-1 px-2 text-xs border rounded-l-md h-8 bg-muted truncate"
                                 value={url}
                                 disabled
                             />
-                            <Button 
+                            <Button
                                 onClick={onCopy}
                                 disabled={copied}
                                 className="h-8 rounded-l-none"
                             >
                                 {copied ? (
-                                    <Check className="h-4 w-4"/>
+                                    <Check className="h-4 w-4" />
                                 ) : (
                                     <Copy className="h-4 w-4" />
                                 )}
@@ -121,14 +113,12 @@ export const Publish = ({
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center">
-                        <Globe 
-                            className="h-8 w-8 text-muted-foreground mb-2"
-                        />
-                        <p className="ttext-sm font-medium mb-2">
+                        <Globe className="h-8 w-8 text-muted-foreground mb-2" />
+                        <p className="text-sm font-medium mb-2">
                             Publicar este documento
                         </p>
                         <span className="text-xs text-muted-foreground mb-4">
-                            comparte este documento con otros
+                            Comparte este documento con otros
                         </span>
                         <Button
                             disabled={isSubmitting}
@@ -142,5 +132,5 @@ export const Publish = ({
                 )}
             </PopoverContent>
         </Popover>
-    )
-}
+    );
+};

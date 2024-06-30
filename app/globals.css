@@ -80,3 +80,30 @@
       @apply bg-background text-foreground;
     }
   }
+
+  @layer utilities {
+    .break-inside-avoid {
+      break-inside: avoid;
+    }
+    .page-break-before-auto {
+      page-break-before: auto;
+    }
+    .page-break-after-auto {
+      page-break-after: auto;
+    }
+    .whitespace-pre-wrap {
+      white-space: pre-wrap;
+    }
+    .break-words {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+  }
+  
+  /* Ejemplo de uso */
+  @media print {
+    .print-container {
+      @apply break-inside-avoid;
+    }
+  }
+  

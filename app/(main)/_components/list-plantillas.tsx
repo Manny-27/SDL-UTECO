@@ -10,12 +10,22 @@ export const PlantillaList: FC = () => {
     const templates = useQuery(api.documents.getTemplates);
     const router = useRouter();
     const documents = useQuery(api.documents.getTemplates);
+    const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
 
     const [search, setSearch] = useState("");
+
+    const filteredTemplates = templates?.filter((template) => {
+        return template.title.toLowerCase().includes(search.toLowerCase());
+    });
+
 
     const filteredDocuments = documents?.filter((document) => {
         return document.title.toLowerCase().includes(search.toLowerCase());
     });
+
+    const onUseTemplate = async (template: any) => {
+        setSelectedTemplate(template);
+    };
 
 
     const onRedirect = (documentId: string) => {
@@ -37,7 +47,7 @@ export const PlantillaList: FC = () => {
                     placeholder="filtrar por título de página..."
                 />
             </div>
-            {templates.map((template) => (
+            {filteredTemplates.map((template) => (
                 <Item
                     key={template._id}
                     id={template._id}

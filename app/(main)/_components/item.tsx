@@ -23,7 +23,12 @@ interface ItemProps {
     label: string;
     onClick?: () => void;
     icon: LucideIcon;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
 };
+
+
+
 
 export const Item = ({
     id,

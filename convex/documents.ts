@@ -405,14 +405,26 @@ export const convertToTemplate = mutation({
   },
 });
 
-  export const getTemplates = query({
+export const getTemplates = query({
     handler: async (ctx) => {
-        const templates = await ctx.db.query("documents")
-            .filter(q => q.eq(q.field("isTemplate"), true))
-            .collect();
-        return templates;
+      const identity = await ctx.auth.getUserIdentity();
+  
+      if (!identity) {
+        throw new Error("No autorizado");
+      }
+  
+      const userId = identity.subject;
+  
+      const templates = await ctx.db.query("documents")
+        .filter(q => q.and(
+          q.eq(q.field("isTemplate"), true),
+          q.eq(q.field("userId"), userId)
+        ))
+        .collect();
+  
+      return templates;
     },
-});
+  });
 
 export const updateDocument = mutation({
     args: {
