@@ -12,12 +12,12 @@ export const Heroes = () => {
                     alt="Documentos"
                     />
                     {/* para imagenes en logo oscuro */}
-                    {/* <Image 
-                    src="/undraw_Doc.png"
+                    <Image 
+                    src="/undraw_Doc_night.png"
                     fill
                     className="object-contain hidden dark:block"
                     alt="Documentos"
-                    /> */}
+                    />
                 </div>
                 <div className="relative h-[400px] w-[400px] hidden md:block">
                     <Image 
@@ -27,12 +27,12 @@ export const Heroes = () => {
                     alt="Collaborators"
                     />
                     {/* para imagenes de modo oscuro */}
-                    {/* <Image 
-                    src="/Collaborators.png"
+                    <Image 
+                    src="/Collaborators_night.png"
                     fill
                     className="object-contain hidden dark:block"
                     alt="Collaborators"
-                    /> */}
+                    />
                 </div>
             </div>
         </div>

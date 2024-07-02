@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
 import { useParams, useRouter } from "next/navigation";
-
-import { Doc, Id } from "@/convex/_generated/dataModel"
-import { useState } from "react";
+import { FC, useState } from "react";
+import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
@@ -16,72 +15,75 @@ interface DocumentListProps {
     data?: Doc<"documents">[];
 }
 
-export const DocumentList = ({
+export const DocumentList: FC<DocumentListProps> = ({
     parentDocumentId,
-    level = 0
-}: DocumentListProps) => {
+    level = 0,
+}) => {
     const params = useParams();
     const router = useRouter();
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
     const onExpanded = (documentId: string) => {
-        setExpanded(prevExpanded => ({
+        setExpanded((prevExpanded) => ({
             ...prevExpanded,
-            [documentId] : !prevExpanded[documentId]
+            [documentId]: !prevExpanded[documentId],
         }));
     };
 
     const documents = useQuery(api.documents.getSidebar, {
-        parentDocument: parentDocumentId
+        parentDocument: parentDocumentId,
     });
 
-    const onRederect = (documentId: string) => {
+    const onRedirect = (documentId: string) => {
         router.push(`/documents/${documentId}`);
-    }
+    };
 
     if (documents === undefined) {
         return (
             <>
-            <Item.Skeleton level={level} />
-            {level === 0 && (
-                <>
-                    <Item.Skeleton level={level} />
-                    <Item.Skeleton level={level} />
-                </>
-            )}
+                <Item.Skeleton level={level} />
+                {level === 0 && (
+                    <>
+                        <Item.Skeleton level={level} />
+                        <Item.Skeleton level={level} />
+                    </>
+                )}
             </>
         );
-    };
+    }
+
+    // Filtrar los documentos que no son plantillas
+    const nonTemplateDocuments = documents.filter((doc) => !doc.isTemplate);
 
     return (
         <>
             <p
-            style={{
-                paddingLeft: level ? `${(level * 12) + 25}px` : undefined
-            }}  
-            className={cn(
-                "hidden text-sm font-medium text-muted-foreground/80",
-                expanded && "last:block",
-                level === 0 && "hidden"
-            )}
+                style={{
+                    paddingLeft: level ? `${(level * 12) + 25}px` : undefined,
+                }}
+                className={cn(
+                    "hidden text-sm font-medium text-muted-foreground/80",
+                    expanded && "last:block",
+                    level === 0 && "hidden"
+                )}
             >
                 No paginas dentro
             </p>
-            {documents.map((document) => (
+            {nonTemplateDocuments.map((document) => (
                 <div key={document._id}>
-                    <Item 
-                    id={document._id}
-                    onClick={() => onRederect(document._id)}
-                    label={document.title}
-                    icon={FileIcon}
-                    documentIcon={document.icon}
-                    active={params.documentId === document._id}
-                    level={level}
-                    onExpand={() => onExpanded(document._id)}
-                    expanded={expanded[document._id]}
+                    <Item
+                        id={document._id}
+                        onClick={() => onRedirect(document._id)}
+                        label={document.title}
+                        icon={FileIcon}
+                        documentIcon={document.icon}
+                        active={params.documentId === document._id}
+                        level={level}
+                        onExpand={() => onExpanded(document._id)}
+                        expanded={expanded[document._id]}
                     />
                     {expanded[document._id] && (
-                        <DocumentList 
+                        <DocumentList
                             parentDocumentId={document._id}
                             level={level + 1}
                         />
@@ -89,6 +91,6 @@ export const DocumentList = ({
                 </div>
             ))}
         </>
-    )
-}
+    );
+};
 

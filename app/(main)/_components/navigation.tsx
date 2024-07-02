@@ -1,12 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText, User } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery} from "usehooks-ts";
 import UserItem from "./user-item";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
@@ -16,6 +16,8 @@ import { TrashBox } from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
+import { Plantilla } from "./plantilla";
+import { PlantillaList } from "./list-plantillas";
 
 const Navigation = () => {
     const router = useRouter();
@@ -25,6 +27,9 @@ const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
     const create = useMutation(api.documents.create);
+    const userInfo = useQuery(api.documents.getUserInfo);
+
+
 
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -143,6 +148,24 @@ const Navigation = () => {
                 icon={Settings}
                 onClick={settings.onOpen}
                 />
+                {/* Usuarios */}
+                {userInfo?.isAdmin && (
+                    <Item label="Usuarios" icon={User} onClick={() => {}} />
+                )}         {/* <Item label="Usuarios" icon={User} onClick={() => {}} /> */}
+                {/* Usuarios */}
+                {/* plantilla */}
+                    <Popover>
+                        <PopoverTrigger className="w-full">
+                            <Item label="Plantillas" icon={NotepadText} />
+                        </PopoverTrigger>
+                        <PopoverContent
+                        className="p-0 w-72"
+                        side={isMobile ? "bottom" : "right"}
+                        >
+                            <PlantillaList />
+                        </PopoverContent>
+                    </Popover>
+                {/* plantilla */}
                 <Item onClick={handleCreate} label="Nuevo documento" icon={PlusCircle} />
             </div>
             <div className="mt-4">

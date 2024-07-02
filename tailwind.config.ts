@@ -1,4 +1,5 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import type { PluginAPI } from "tailwindcss/types/config";
 
 const config = {
   darkMode: ["class"],
@@ -7,7 +8,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -74,7 +75,32 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"),
+    function (api: PluginAPI) {
+      const { addUtilities } = api;
+      const newUtilities = {
+        '.break-inside-avoid': {
+          'break-inside': 'avoid',
+        },
+        '.page-break-before-auto': {
+          'page-break-before': 'auto',
+        },
+        '.page-break-after-auto': {
+          'page-break-after': 'auto',
+        },
+        '.whitespace-pre-wrap': {
+          'white-space': 'pre-wrap',
+        },
+        '.break-words': {
+          'overflow-wrap': 'break-word',
+          'word-wrap': 'break-word',
+        },
+      };
 
-export default config
+      addUtilities(newUtilities, ['responsive', 'hover', 'focus', 'print']);
+    },
+  ],
+} satisfies Config;
+
+export default config;
