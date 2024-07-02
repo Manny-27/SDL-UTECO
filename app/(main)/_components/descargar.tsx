@@ -6,9 +6,10 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface DescargarProps {
-  documentId: string;
+  documentId: Id<"documents">;
 }
 
 export const Descargar = ({ documentId }: DescargarProps) => {

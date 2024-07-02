@@ -16,10 +16,4 @@ export default defineSchema({
   })
   .index("by_user", ["userId"])
   .index("by_user_parent", ["userId", "parentDocument"]),
-  users: defineTable({
-    userId: v.string(),
-    fullName: v.string(),
-    emailAddresses: v.array(v.object({ emailAddress: v.string() })),
-    imageUrl: v.string(),
-  })
 });
