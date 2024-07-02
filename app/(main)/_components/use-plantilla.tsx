@@ -5,7 +5,6 @@ import { Item } from "./item";
 import { useParams } from "next/navigation";
 import { FileIcon, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import Editor from "./Editor"; // Asegúrate de que la ruta sea correcta
 import {
     AlertDialog,
     AlertDialogAction,
@@ -18,10 +17,13 @@ import {
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 
+// Aquí no estamos importando Id como un valor, solo como tipo
+import { Id } from "@/convex/_generated/dataModel"; // Asegúrate de que esto sea correcto
+
 export const UsePlantilla: FC = () => {
     const templates = useQuery(api.documents.getTemplates);
     const params = useParams();
-    const currentDocumentId = params.documentId;
+    const currentDocumentId = Array.isArray(params.documentId) ? params.documentId[0] : params.documentId;
     const [search, setSearch] = useState("");
     const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
     const [previewTemplate, setPreviewTemplate] = useState<any>(null);
@@ -38,15 +40,15 @@ export const UsePlantilla: FC = () => {
     };
 
     const handleConfirmUseTemplate = async () => {
-        if (selectedTemplate) {
+        if (selectedTemplate && currentDocumentId) {
             await updateDocument({
-                id: currentDocumentId,
+                id: currentDocumentId as Id<"documents">, // Hacer un type cast en lugar de conversión
                 title: selectedTemplate.title,
                 coverImage: selectedTemplate.coverImage,
                 content: selectedTemplate.content,
                 icon: selectedTemplate.icon,
                 isPublished: selectedTemplate.isPublished,
-                parentDocument: selectedTemplate.parentDocument,
+                // parentDocument: selectedTemplate.parentDocument, // Eliminar esta línea por ahora
             });
             // Recargar la página completamente después de la mutación
             window.location.reload();
@@ -70,7 +72,7 @@ export const UsePlantilla: FC = () => {
             </div>
             <div>
                 <div className="w-full">
-                    {filteredTemplates.map((template) => (
+                    {filteredTemplates?.map((template) => (
                         <Item
                             key={template._id}
                             id={template._id}
@@ -88,7 +90,6 @@ export const UsePlantilla: FC = () => {
                         <div>
                             <h3 className="text-xl font-bold">{previewTemplate.title}</h3>
                             <p>{previewTemplate.content}</p>
-                            {/* Agrega aquí más campos si es necesario */}
                         </div>
                     ) : (
                         <span className="text-gray-500 text-sm mt-4 flex flex-col">Aqui tienes un listado de tus plantillas</span>

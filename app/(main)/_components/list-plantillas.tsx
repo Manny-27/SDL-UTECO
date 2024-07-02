@@ -18,7 +18,6 @@ export const PlantillaList: FC = () => {
         return template.title.toLowerCase().includes(search.toLowerCase());
     });
 
-
     const filteredDocuments = documents?.filter((document) => {
         return document.title.toLowerCase().includes(search.toLowerCase());
     });
@@ -26,7 +25,6 @@ export const PlantillaList: FC = () => {
     const onUseTemplate = async (template: any) => {
         setSelectedTemplate(template);
     };
-
 
     const onRedirect = (documentId: string) => {
         router.push(`/documents/${documentId}`);
@@ -47,7 +45,7 @@ export const PlantillaList: FC = () => {
                     placeholder="filtrar por título de página..."
                 />
             </div>
-            {filteredTemplates.map((template) => (
+            {filteredTemplates && filteredTemplates.map((template) => (
                 <Item
                     key={template._id}
                     id={template._id}

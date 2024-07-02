@@ -21,9 +21,10 @@ import {
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { PlantillaList } from "./list-plantillas";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface PlantillaProps {
-    documentId: string;
+    documentId: Id<"documents">;
 }
 
 export const Plantilla: FC<PlantillaProps> = ({ documentId }) => {
