@@ -2,9 +2,10 @@ import { FC, useState } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { FileIcon, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import Editor from "./Editor"; // Asegúrate de que la ruta sea correcta
 import {
     AlertDialog,
     AlertDialogAction,
@@ -19,7 +20,6 @@ import {
 
 export const UsePlantilla: FC = () => {
     const templates = useQuery(api.documents.getTemplates);
-    const router = useRouter();
     const params = useParams();
     const currentDocumentId = params.documentId;
     const [search, setSearch] = useState("");
@@ -48,7 +48,8 @@ export const UsePlantilla: FC = () => {
                 isPublished: selectedTemplate.isPublished,
                 parentDocument: selectedTemplate.parentDocument,
             });
-            router.push(`/documents/${currentDocumentId}`);
+            // Recargar la página completamente después de la mutación
+            window.location.reload();
         }
     };
 
@@ -90,7 +91,7 @@ export const UsePlantilla: FC = () => {
                             {/* Agrega aquí más campos si es necesario */}
                         </div>
                     ) : (
-                        <span className="text-gray-500 text-sm mt-4 flex flex-col">Pasa el mouse sobre una plantilla para ver la previsualización.</span>
+                        <span className="text-gray-500 text-sm mt-4 flex flex-col">Aqui tienes un listado de tus plantillas</span>
                     )}
                 </div>
             </div>

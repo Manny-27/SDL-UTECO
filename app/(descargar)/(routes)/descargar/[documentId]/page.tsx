@@ -30,6 +30,7 @@ export default function DescargarPage() {
         id: params.documentId as Id<"documents">,
         isPublished: true,
       });
+      // window.location.reload();
     }
   }, [document, params.documentId, update]);
 

@@ -16,13 +16,13 @@ const Error = () => {
                 className="dark:hidden"
             />
             {/* para imagen en modo noche */}
-            {/* <Image 
+            <Image 
                 src="/404.png"
-                height="300"
-                width="300"
+                height="600"
+                width="600"
                 alt="Error"
                 className="hidden dark:block"
-            /> */}
+            />
             <h2 className="text-xl font-medium">
                 Algo salio Mal!
             </h2>

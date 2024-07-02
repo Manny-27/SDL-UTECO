@@ -28,6 +28,7 @@ export const Publish = ({ initialData }: PublishProps) => {
         const promise = update({
             id: initialData._id,
             isPublished: true,
+
         })
         .then(() => setIsPublished(true))
         .finally(() => setIsSubmitting(false));
