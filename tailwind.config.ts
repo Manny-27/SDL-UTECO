@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import type { PluginAPI } from "tailwindcss/types/config";
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -98,9 +98,9 @@ const config = {
         },
       };
 
-      addUtilities(newUtilities, ['responsive', 'hover', 'focus', 'print']);
+      addUtilities(newUtilities);
     },
   ],
-} satisfies Config;
+};
 
 export default config;
