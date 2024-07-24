@@ -1,0 +1,13 @@
+#fondo {
+    /* background-image: linear-gradient(to left top, #fbf280, #eacb65, #d6a64f, #bf823d, #a5602e, #975923, #8a5118, #7c4a0b, #745901, #686805, #56761a, #3a8334); */
+    /* background-image: linear-gradient(to left, #fbf280, #eacb65, #d6a64f, #bf823d, #a5602e, #975923, #8a5118, #7c4a0b, #745901, #686805, #56761a, #3a8334); */
+    /* background-image: linear-gradient(to left bottom, #fbf280, #eacb65, #d6a64f, #bf823d, #a5602e, #975923, #8a5118, #7c4a0b, #745901, #686805, #56761a, #3a8334); */
+    
+}
+
+#fondo {
+    background-image: url("/fondo.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

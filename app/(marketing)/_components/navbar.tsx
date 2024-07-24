@@ -28,15 +28,11 @@ export const Navbar = () => {
                 {!isAuthenticated && !isLoading && (
                     <>
                     <SignInButton mode="modal">
-                        <Button variant="ghost" size="sm">
-                            Log in
-                        </Button>
-                    </SignInButton>
-                    <SignInButton mode="modal">
-                        <Button size="sm">
+                        <Button variant="outline" size="sm">
                             Registrarte
                         </Button>
                     </SignInButton>
+                    
                     </>
                 )}
                     {isAuthenticated && !isLoading && (

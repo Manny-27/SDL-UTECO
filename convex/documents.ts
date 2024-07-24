@@ -2,7 +2,7 @@ import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
 import { Doc,Id } from "./_generated/dataModel"
-import { normalize } from "path";
+
 // import { DocumentList } from '../app/(main)/_components/document-list';
 
 export const archive = mutation({
@@ -295,13 +295,13 @@ export const update = mutation({
 
         const existingDocument = await ctx.db.get(args.id);
 
-        if (!existingDocument) {
-            throw new Error("No encontrado")
-        }
+        // if (!existingDocument) {
+        //     throw new Error("No encontrado")
+        // }
 
-        if (existingDocument.userId !== userId) {
-            throw new Error("no autorizado");
-        }
+        // if (existingDocument.userId !== userId) {
+        //     throw new Error("no autorizado");
+        // }
 
         const document = await ctx.db.patch(args.id, {
             ...rest
@@ -480,10 +480,86 @@ export const updateDocument = mutation({
   
     if (!user) {
       // Si no se encuentra el usuario, devolvemos isAdmin como falso.
-      return { isAdmin: false };
+      return { isAdmin: true };
     }
-  
+
+    const rolesWithAdminAccess = ["Administrador", "Secretario administrativo"];
+    const userRole = user.role ?? ""; // Asigna una cadena vacía si user.role es undefined
+    const isAdmin = rolesWithAdminAccess.includes(userRole) && userRole !== "Secretario";
+
     return {
-      isAdmin: user.isAdmin || false,
+      isAdmin: isAdmin,
     };
   });
+
+
+// Query para obtener todos los usuarios
+
+export const getAllUserIds = query(async ({ db }) => {
+  // Obtener todos los documentos y extraer solo los userId únicos
+  const documents = await db.query("documents").collect();
+  const userIds = [...new Set(documents.map(doc => doc.userId))];
+  return userIds;
+});
+
+
+
+export const getAllName = query(async ({ db }) => {
+  // Obtener todos los documentos y extraer solo los userId únicos
+  const documents = await db.query("documents").collect();
+  const fullName = await db.query("documents").collect();
+  return fullName;
+});
+
+export const getAdmin = query(async ({ db }) => {
+  // Obtener todos los documentos y extraer solo los userId únicos
+  const documents = await db.query("documents").collect();
+  const isAdmin = await db.query("documents").collect();
+  return isAdmin;
+});
+
+//para el pubish 
+// Query para obtener todos los userIds
+
+
+// Query para obtener todos los nombres completos
+export const getAllNames = query(async ({ db }) => {
+  const documents = await db.query("documents").collect();
+  return documents.map(doc => ({ userId: doc.userId, fullName: doc.fullName, admin: true }));
+});
+
+export const isAdmins = query(async ({ db }) => {
+  const isAdmin = await db.query("documents").collect();
+  return isAdmin.map(doc => ({ userId: doc.userId, fullName: doc.fullName, admin: true })); // Inicia con admin true
+});
+////////
+
+export const shareDocument = mutation({
+  args: {
+    id: v.id("documents"),
+    targetUserId: v.string(), // ID of the user with whom the document is shared
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("No autorizado");
+
+    const userId = identity.subject;
+    const document = await ctx.db.get(args.id);
+    if (!document) throw new Error("Documento no encontrado");
+
+    if (document.userId !== userId) throw new Error("No autorizado para compartir este documento");
+
+    // Add targetUserId to the sharedWith array
+    const updatedDocument = await ctx.db.patch(args.id, {
+      sharedWith: [...(document.sharedWith || []), args.targetUserId],
+    });
+
+    return updatedDocument;
+  },
+});
+
+export const getSharedDocuments = query(async ({ db }) => {
+  // Suponiendo que la colección se llama "documents"
+  return await db.query("documents").filter(q => q.eq(q.field("isPublished"), true)).collect();
+});
+

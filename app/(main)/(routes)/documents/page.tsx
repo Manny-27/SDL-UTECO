@@ -41,7 +41,7 @@ const DocumentsPage = () => {
             <h2 className="text-lg font-medium">
                 Bienvenido {user?.firstName}
             </h2>
-            <Button onClick={onCreate}>
+            <Button onClick={onCreate} variant="uteco">
                 <PlusCircle className="h-4 w-4 mr-2"/>
                 Crear un documento
             </Button>

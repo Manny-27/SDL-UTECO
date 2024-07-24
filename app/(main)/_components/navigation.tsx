@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText, User } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, NotepadText, User, ExternalLink } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery} from "usehooks-ts";
@@ -18,6 +18,7 @@ import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
 import { Plantilla } from "./plantilla";
 import { PlantillaList } from "./list-plantillas";
+import { SharedList } from "./shared-list";
 
 const Navigation = () => {
     const router = useRouter();
@@ -148,11 +149,11 @@ const Navigation = () => {
                 icon={Settings}
                 onClick={settings.onOpen}
                 />
-                {/* Usuarios */}
+                {/* admin */}
                 {userInfo?.isAdmin && (
-                    <Item label="Usuarios" icon={User} onClick={() => {}} />
-                )}         {/* <Item label="Usuarios" icon={User} onClick={() => {}} /> */}
-                {/* Usuarios */}
+                    <Item label="Usuarios" icon={User} onClick={() => router.push('/admin')} />
+                 )}         {/* <Item label="Usuarios" icon={User} onClick={() => {}} /> */}
+                {/* admin */}
                 {/* plantilla */}
                     <Popover>
                         <PopoverTrigger className="w-full">
@@ -166,6 +167,19 @@ const Navigation = () => {
                         </PopoverContent>
                     </Popover>
                 {/* plantilla */}
+                 {/* compartir */}
+                <Popover>
+                        <PopoverTrigger className="w-full">
+                            <Item label="Compartidos" icon={ExternalLink} />
+                        </PopoverTrigger>
+                        <PopoverContent
+                        className="p-0 w-72"
+                        side={isMobile ? "bottom" : "right"}
+                        >
+                            <SharedList />
+                        </PopoverContent>
+                    </Popover>
+                {/* compartir */}
                 <Item onClick={handleCreate} label="Nuevo documento" icon={PlusCircle} />
             </div>
             <div className="mt-4">
