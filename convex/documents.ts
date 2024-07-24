@@ -498,7 +498,7 @@ export const updateDocument = mutation({
 export const getAllUserIds = query(async ({ db }) => {
   // Obtener todos los documentos y extraer solo los userId únicos
   const documents = await db.query("documents").collect();
-  const userIds = [...new Set(documents.map(doc => doc.userId))];
+  const userIds = Array.from(new Set(documents.map(doc => doc.userId)));
   return userIds;
 });
 
@@ -532,7 +532,6 @@ export const isAdmins = query(async ({ db }) => {
   const isAdmin = await db.query("documents").collect();
   return isAdmin.map(doc => ({ userId: doc.userId, fullName: doc.fullName, admin: true })); // Inicia con admin true
 });
-////////
 
 export const shareDocument = mutation({
   args: {
