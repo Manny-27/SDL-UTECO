@@ -6,32 +6,21 @@ import { useRouter } from "next/navigation";
 import { FileIcon, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-export const PlantillaList: FC = () => {
-    const templates = useQuery(api.documents.getTemplates);
+export const SharedList: FC = () => {
+    const sharedDocuments = useQuery(api.documents.getSharedDocuments);
     const router = useRouter();
-    const documents = useQuery(api.documents.getTemplates);
-    const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-
     const [search, setSearch] = useState("");
 
-    const filteredTemplates = templates?.filter((template) => {
-        return template.title.toLowerCase().includes(search.toLowerCase());
-    });
-
-    const filteredDocuments = documents?.filter((document) => {
+    const filteredSharedDocuments = sharedDocuments?.filter((document) => {
         return document.title.toLowerCase().includes(search.toLowerCase());
     });
-
-    const onUseTemplate = async (template: any) => {
-        setSelectedTemplate(template);
-    };
 
     const onRedirect = (documentId: string) => {
         router.push(`/documents/${documentId}`);
     };
 
-    if (templates === undefined) {
-        return <p>Cargando plantillas...</p>;
+    if (sharedDocuments === undefined) {
+        return <p>Cargando documentos compartidos...</p>;
     }
 
     return (
@@ -42,17 +31,17 @@ export const PlantillaList: FC = () => {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="h-7 px-2 focus-visible:ring-transparent bg-secondary"
-                    placeholder="filtrar por título de página..."
+                    placeholder="filtrar por título de documento..."
                 />
             </div>
-            {filteredTemplates && filteredTemplates.map((template) => (
+            {filteredSharedDocuments && filteredSharedDocuments.map((document) => (
                 <Item
-                    key={template._id}
-                    id={template._id}
-                    label={template.title}
+                    key={document._id}
+                    id={document._id}
+                    label={document.title}
                     icon={FileIcon}
-                    documentIcon={template.icon}
-                    onClick={() => onRedirect(template._id)}
+                    documentIcon={document.icon}
+                    onClick={() => onRedirect(document._id)}
                 />
             ))}
         </div>

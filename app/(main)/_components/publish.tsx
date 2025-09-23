@@ -1,12 +1,14 @@
 import { Doc } from "@/convex/_generated/dataModel";
 import { PopoverTrigger, Popover, PopoverContent } from '@/components/ui/popover';
 import { useOrigin } from "@/hooks/use-origin";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Check, Copy, Globe } from "lucide-react";
+import { Id } from "@/convex/_generated/dataModel";
+
 
 interface PublishProps {
     initialData: Doc<"documents">
@@ -15,10 +17,13 @@ interface PublishProps {
 export const Publish = ({ initialData }: PublishProps) => {
     const origin = useOrigin();
     const update = useMutation(api.documents.update);
+    const shareDocument = useMutation(api.documents.shareDocument); // Nueva mutación
+    const userNames = useQuery(api.documents.getAllNames); // Obtener la lista de usuarios
 
     const [copied, setCopied] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isPublished, setIsPublished] = useState(initialData.isPublished);
+    const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
     const url = `${origin}/preview/${initialData._id}`;
 
@@ -28,15 +33,14 @@ export const Publish = ({ initialData }: PublishProps) => {
         const promise = update({
             id: initialData._id,
             isPublished: true,
-
         })
         .then(() => setIsPublished(true))
         .finally(() => setIsSubmitting(false));
 
         toast.promise(promise, {
-            loading: "Publicando...",
-            success: "Documento publicado",
-            error: "Error al publicar documento"
+            loading: "Compartiendo...",
+            success: "Documento compartido",
+            error: "Error al compartir documento"
         });
     };
 
@@ -51,9 +55,9 @@ export const Publish = ({ initialData }: PublishProps) => {
         .finally(() => setIsSubmitting(false));
 
         toast.promise(promise, {
-            loading: "No publicando...",
-            success: "Documento no publicado",
-            error: "Error al no publicar documento"
+            loading: "dejar de compartir...",
+            success: "Documento dejado de compartir",
+            error: "Error al compartir documento"
         });
     };
 
@@ -70,7 +74,7 @@ export const Publish = ({ initialData }: PublishProps) => {
         <Popover>
             <PopoverTrigger asChild>
                 <Button size="sm" variant="ghost">
-                    Publicar
+                    Compartir
                     {isPublished && (
                         <Globe className="text-sky-500 w-4 h-4 ml-2" />
                     )}
@@ -109,7 +113,7 @@ export const Publish = ({ initialData }: PublishProps) => {
                             disabled={isSubmitting}
                             onClick={onUnpublish}
                         >
-                            No Publicar
+                            No Compartir
                         </Button>
                     </div>
                 ) : (
@@ -127,7 +131,7 @@ export const Publish = ({ initialData }: PublishProps) => {
                             className="w-full text-xs"
                             size="sm"
                         >
-                            Publicar
+                            Compartir
                         </Button>
                     </div>
                 )}

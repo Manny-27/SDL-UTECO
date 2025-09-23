@@ -13,6 +13,9 @@ export default defineSchema({
     isPublished: v.boolean(),
     isTemplate: v.optional(v.boolean()),
     isAdmin: v.optional(v.boolean()),
+    fullName: v.optional(v.string()),
+    role: v.optional(v.string()),
+    sharedWith: v.optional(v.array(v.string())),
   })
   .index("by_user", ["userId"])
   .index("by_user_parent", ["userId", "parentDocument"]),
